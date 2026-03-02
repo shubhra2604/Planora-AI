@@ -1,0 +1,183 @@
+/* App-level locked planner styles */
+.planner-locked {
+  padding: 80px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  background: linear-gradient(
+    135deg,
+    rgba(13, 110, 253, 0.05),
+    rgba(77, 166, 255, 0.05)
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+.planner-locked::before {
+  content: "";
+  position: absolute;
+  top: -100px;
+  right: -100px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(77, 166, 255, 0.08), transparent);
+  border-radius: 50%;
+  animation: float 20s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(30px, -30px);
+  }
+}
+
+.locked-content {
+  max-width: 600px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(
+    135deg,
+    rgba(77, 166, 255, 0.12),
+    rgba(77, 166, 255, 0.05)
+  );
+  border: 2px solid rgba(77, 166, 255, 0.2);
+  border-radius: 20px;
+  padding: 60px 40px;
+  backdrop-filter: blur(10px);
+  animation: slideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.locked-content h2 {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0 0 16px;
+  background: linear-gradient(135deg, #ffffff, #6fb8ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.locked-content p {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 32px;
+  line-height: 1.6;
+}
+
+.locked-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.unlock-btn {
+  padding: 14px 40px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: none;
+}
+
+.unlock-btn.signup {
+  background: linear-gradient(135deg, #4da6ff, #6fb8ff);
+  color: white;
+  box-shadow: 0 8px 24px rgba(77, 166, 255, 0.3);
+}
+
+.unlock-btn.signup:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(77, 166, 255, 0.4);
+}
+
+.unlock-btn.login {
+  background: transparent;
+  border: 2px solid rgba(77, 166, 255, 0.5);
+  color: #6fb8ff;
+  box-shadow: none;
+}
+
+.unlock-btn.login:hover {
+  background: rgba(77, 166, 255, 0.1);
+  border-color: rgba(77, 166, 255, 0.8);
+  transform: translateY(-4px);
+}
+
+.unlock-btn:active {
+  transform: translateY(-2px);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .planner-locked {
+    padding: 60px 16px;
+    min-height: 300px;
+  }
+
+  .locked-content {
+    padding: 40px 24px;
+  }
+
+  .locked-content h2 {
+    font-size: 28px;
+  }
+
+  .locked-content p {
+    font-size: 14px;
+  }
+
+  .unlock-btn {
+    padding: 12px 32px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .planner-locked {
+    padding: 40px 12px;
+  }
+
+  .locked-content {
+    padding: 32px 20px;
+  }
+
+  .locked-content h2 {
+    font-size: 24px;
+  }
+
+  .locked-content p {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .locked-buttons {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .unlock-btn {
+    padding: 12px 28px;
+    font-size: 14px;
+    width: 100%;
+  }
+}

@@ -1,0 +1,40 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    match /users/{userId}/trips/{tripId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    match /users/{userId}/feedback/{feedbackId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    match /publicFeedback/{feedbackId} {
+      allow read: if true;
+      allow create: if request.resource.data.rating is number
+                    && request.resource.data.rating >= 1
+                    && request.resource.data.rating <= 5
+                    && request.resource.data.feedback is string
+                    && request.resource.data.feedback.size() > 0
+                    && request.resource.data.feedback.size() <= 2000
+                    && request.resource.data.hometown is string
+                    && request.resource.data.hometown.size() > 0
+                    && request.resource.data.hometown.size() <= 120
+                    && request.resource.data.itineraryDestination is string
+                    && request.resource.data.itineraryDestination.size() > 0
+                    && request.resource.data.itineraryDestination.size() <= 160;
+      allow update, delete: if false;
+    }
+
+    match /sharedItineraries/{id} {
+      allow read, write: if true;
+    }
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

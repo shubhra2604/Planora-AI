@@ -1,0 +1,1595 @@
+.itinerary-container {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: visible;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.itinerary-content {
+  position: relative;
+  z-index: 10;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 100px 24px 80px;
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.2);
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.itinerary-content p,
+.itinerary-content li {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.itinerary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 16px 0;
+}
+
+.back-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.back-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(77, 166, 255, 0.4);
+  transform: translateX(-4px);
+}
+
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.share-status {
+  margin: -8px 0 14px;
+  color: rgba(185, 230, 255, 0.95);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.action-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(164, 185, 255, 0.28);
+  color: #a4b9ff;
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(199, 146, 255, 0.15);
+  border-color: #c792ff;
+  color: #c792ff;
+}
+
+.action-btn--delete {
+  background: rgba(120, 20, 40, 0.22);
+  border-color: rgba(251, 113, 133, 0.35);
+  color: #fca5a5;
+}
+
+.action-btn--delete:hover {
+  background: rgba(185, 28, 50, 0.32);
+  border-color: #fb7185;
+  color: #fff;
+  box-shadow: 0 0 14px rgba(251, 113, 133, 0.3);
+}
+
+.itinerary-hero {
+  background: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(164, 185, 255, 0.2);
+  border-radius: 20px;
+  padding: 32px 40px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(14px);
+}
+
+.itinerary-hero h1 {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0 0 24px;
+  color: #c792ff;
+  text-shadow: 0 0 20px rgba(199, 146, 255, 0.35);
+  line-height: 1.2;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #a4b9ff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.itinerary-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  border: 1px solid rgba(164, 185, 255, 0.25);
+  backdrop-filter: blur(12px);
+}
+
+.tab {
+  background: transparent;
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.82);
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  background: rgba(199, 146, 255, 0.1);
+  color: #c792ff;
+}
+
+.tab.active {
+  background: rgba(199, 146, 255, 0.15);
+  color: #c792ff;
+  font-weight: 600;
+  border: 1px solid rgba(199, 146, 255, 0.35);
+  box-shadow: none;
+}
+
+.tab-content {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(164, 185, 255, 0.2);
+  border-radius: 20px;
+  padding: 30px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 22px rgba(164, 185, 255, 0.15);
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Overview Tab */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--overview-columns, 5), minmax(0, 1fr));
+  gap: 20px;
+}
+
+.overview-card {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(164, 185, 255, 0.25);
+  border-radius: 14px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 0 22px rgba(164, 185, 255, 0.15);
+}
+
+.overview-card:hover {
+  background: rgba(0, 0, 0, 0.4);
+  border-color: rgba(199, 146, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+.overview-card h3 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  color: #a4b9ff;
+  letter-spacing: 0.3px;
+  text-shadow: none;
+}
+
+.card-preview {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  font-style: italic;
+}
+
+.card-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      rgba(77, 166, 255, 0.16),
+      rgba(0, 0, 0, 0)
+    ),
+    rgba(2, 8, 18, 0.72);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+  padding: 18px;
+}
+
+.card-modal {
+  background: linear-gradient(
+    165deg,
+    rgba(18, 40, 84, 0.97),
+    rgba(30, 56, 108, 0.95)
+  );
+  border: 1px solid rgba(111, 184, 255, 0.35);
+  border-radius: 22px;
+  max-width: min(760px, 96vw);
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease;
+  box-shadow:
+    0 24px 70px rgba(2, 10, 22, 0.72),
+    0 0 0 1px rgba(111, 184, 255, 0.12) inset,
+    0 0 36px rgba(77, 166, 255, 0.24);
+}
+
+.card-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 22px 24px;
+  border-bottom: 1px solid rgba(111, 184, 255, 0.2);
+  position: sticky;
+  top: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 24, 52, 0.9),
+    rgba(10, 24, 52, 0.76)
+  );
+  backdrop-filter: blur(8px);
+  z-index: 2;
+}
+
+.card-modal-header h2 {
+  font-size: clamp(30px, 2vw, 38px);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.22;
+  color: #fff;
+  text-shadow: 0 0 16px rgba(111, 184, 255, 0.45);
+  letter-spacing: 0.2px;
+}
+
+.modal-close-btn {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(111, 184, 255, 0.32);
+  background: rgba(111, 184, 255, 0.12);
+  color: rgba(230, 242, 255, 0.92);
+  border-radius: 50%;
+  font-size: 22px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.modal-close-btn:hover {
+  background: rgba(111, 184, 255, 0.22);
+  border-color: rgba(111, 184, 255, 0.6);
+  color: #fff;
+  transform: translateY(-1px) scale(1.02);
+  text-shadow: 0 0 12px rgba(111, 184, 255, 0.64);
+}
+
+.card-modal-content {
+  padding: 20px 24px 24px;
+  color: rgba(255, 255, 255, 0.96);
+  line-height: 1.7;
+  font-size: 15px;
+}
+
+.card-modal-content p {
+  margin: 0 0 16px;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.card-modal-content p strong {
+  color: rgba(111, 184, 255, 0.9);
+}
+
+.highlights-list,
+.tips-list,
+.packing-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.highlights-list li,
+.tips-list li,
+.packing-list li {
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(
+    135deg,
+    rgba(111, 184, 255, 0.08),
+    rgba(111, 184, 255, 0.04)
+  );
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.96);
+  line-height: 1.58;
+  font-size: 14px;
+  font-weight: 500;
+  text-shadow: 0 0 10px rgba(77, 166, 255, 0.18);
+}
+
+.highlights-list li:last-child,
+.tips-list li:last-child,
+.packing-list li:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 768px) {
+  .card-modal-overlay {
+    padding: 12px;
+  }
+
+  .card-modal {
+    border-radius: 16px;
+    max-height: 92vh;
+  }
+
+  .card-modal-header {
+    padding: 16px;
+  }
+
+  .card-modal-header h2 {
+    font-size: 22px;
+  }
+
+  .modal-close-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 20px;
+  }
+
+  .card-modal-content {
+    padding: 16px;
+  }
+
+  .highlights-list li,
+  .tips-list li,
+  .packing-list li {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+}
+
+.transport-tip {
+  margin-top: 12px;
+  padding: 12px;
+  background: rgba(77, 166, 255, 0.1);
+  border-left: 3px solid #4da6ff;
+  border-radius: 4px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Itinerary Tab */
+.day-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.day-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 10px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.day-pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.day-pill.active {
+  background: linear-gradient(135deg, #4da6ff, #6fb8ff);
+  border-color: transparent;
+  color: #000;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(77, 166, 255, 0.3);
+}
+
+.day-detail {
+  animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.day-header {
+  margin-bottom: 30px;
+}
+
+.day-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #a4b9ff;
+  margin: 0 0 8px;
+  text-shadow: none;
+}
+
+.day-date {
+  font-size: 16px;
+  color: #a4b9ff;
+}
+
+.activities-timeline h3 {
+  font-size: 20px;
+  color: #a4b9ff;
+  margin: 0 0 20px;
+}
+
+.activity-card {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(77, 166, 255, 0.1),
+    rgba(111, 184, 255, 0.05)
+  );
+  border-left: 3px solid #4da6ff;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 20px rgba(77, 166, 255, 0.12);
+}
+
+.activity-card:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(77, 166, 255, 0.12),
+    rgba(111, 184, 255, 0.06)
+  );
+  transform: translateX(4px);
+  box-shadow: 0 0 28px rgba(77, 166, 255, 0.22);
+}
+
+.activity-time {
+  flex-shrink: 0;
+  width: 60px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4da6ff;
+}
+
+.activity-content {
+  flex: 1;
+}
+
+.activity-content h4 {
+  font-size: 19px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 8px;
+  letter-spacing: 0.3px;
+  text-shadow: 0 0 10px rgba(111, 184, 255, 0.4);
+}
+
+.activity-content p {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.96);
+  margin: 8px 0;
+  line-height: 1.7;
+  font-weight: 400;
+  text-shadow: 0 0 8px rgba(77, 166, 255, 0.2);
+}
+
+.activity-location {
+  font-size: 14px;
+  color: rgba(77, 166, 255, 0.95);
+  font-weight: 600;
+}
+
+.activity-cost {
+  font-size: 14px;
+  font-weight: 700;
+  color: #6fb8ff;
+}
+
+.meals-section {
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.meals-section h3 {
+  font-size: 20px;
+  color: #a4b9ff;
+  margin: 0 0 20px;
+}
+
+.meals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.meal-card {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(77, 166, 255, 0.08),
+    rgba(111, 184, 255, 0.04)
+  );
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.2s ease;
+}
+
+.meal-card:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(77, 166, 255, 0.12),
+    rgba(111, 184, 255, 0.06)
+  );
+  border-color: rgba(77, 166, 255, 0.2);
+}
+
+.meal-icon {
+  font-size: 24px;
+}
+
+.meal-card strong {
+  display: block;
+  color: #fff;
+  margin-bottom: 4px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.meal-card p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.day-notes {
+  margin-top: 30px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+}
+
+.day-notes h4 {
+  font-size: 16px;
+  color: #fff;
+  margin: 0 0 12px;
+}
+
+.day-notes p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Hotels Tab */
+.hotels-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.hotels-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #a4b9ff;
+  margin: 0;
+}
+
+.hotel-budget-hint {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: rgba(111, 184, 255, 0.9);
+}
+
+.booking-links {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.booking-link {
+  background: rgba(77, 166, 255, 0.15);
+  border: 1px solid rgba(77, 166, 255, 0.3);
+  color: #6fb8ff;
+  padding: 8px 16px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.booking-link:hover {
+  background: rgba(77, 166, 255, 0.25);
+  border-color: #4da6ff;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.search-all-btn {
+  background: linear-gradient(135deg, #4da6ff, #6fb8ff);
+  color: #000;
+  padding: 12px 24px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.search-all-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(77, 166, 255, 0.4);
+}
+
+.hotels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.hotel-card {
+  background: linear-gradient(
+    135deg,
+    rgba(77, 166, 255, 0.08),
+    rgba(111, 184, 255, 0.04)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.hotel-card:hover {
+  transform: translateY(-4px);
+  background: linear-gradient(
+    135deg,
+    rgba(77, 166, 255, 0.12),
+    rgba(111, 184, 255, 0.06)
+  );
+  border-color: rgba(77, 166, 255, 0.4);
+  box-shadow: 0 8px 24px rgba(77, 166, 255, 0.2);
+}
+
+.hotel-type {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: linear-gradient(135deg, #4da6ff, #6fb8ff);
+  color: #000;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.hotel-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 12px;
+  padding-right: 100px;
+}
+
+.hotel-location {
+  font-size: 13px;
+  color: rgba(77, 166, 255, 0.9);
+  margin: 8px 0;
+}
+
+.hotel-price {
+  font-size: 24px;
+  font-weight: 700;
+  color: #6fb8ff;
+  margin: 12px 0;
+}
+
+.hotel-amenities {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 12px 0;
+  line-height: 1.6;
+}
+
+.book-btn {
+  display: inline-block;
+  margin-top: 16px;
+  background: rgba(77, 166, 255, 0.2);
+  border: 1px solid rgba(77, 166, 255, 0.4);
+  color: #6fb8ff;
+  padding: 10px 20px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.book-btn:hover {
+  background: rgba(77, 166, 255, 0.3);
+  border-color: #4da6ff;
+  color: #fff;
+}
+
+.no-hotels {
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.no-hotels p {
+  margin: 8px 0;
+  font-size: 15px;
+}
+
+.no-hotels p:first-child {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Map Tab */
+.map-section h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #a4b9ff;
+  margin: 0 0 24px;
+}
+
+.map-container {
+  margin-bottom: 30px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.map-locations h3 {
+  font-size: 20px;
+  color: #fff;
+  margin: 0 0 20px;
+}
+
+.locations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.location-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.day-badge {
+  background: linear-gradient(135deg, #4da6ff, #6fb8ff);
+  color: #000;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.location-item span:last-child {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+}
+
+/* Print styles */
+@media print {
+  .itinerary-container {
+    background: white;
+  }
+
+  .back-btn,
+  .header-actions,
+  .itinerary-tabs {
+    display: none;
+  }
+
+  .tab-content {
+    background: white;
+    border: none;
+    color: black;
+  }
+
+  .itinerary-hero {
+    background: #f5f5f5;
+  }
+
+  .itinerary-hero h1 {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    background: linear-gradient(135deg, #333, #4da6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+@media (max-width: 1400px) and (min-width: 769px) {
+  .overview-grid {
+    gap: 14px;
+  }
+
+  .overview-card {
+    padding: 18px 16px;
+    border-radius: 14px;
+  }
+
+  .overview-card h3 {
+    font-size: clamp(17px, 1.35vw, 20px);
+    line-height: 1.2;
+    letter-spacing: 0.1px;
+  }
+
+  .card-preview {
+    font-size: 13px;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .itinerary-content {
+    padding: 16px 16px 60px;
+  }
+
+  .itinerary-header {
+    padding: 8px 0;
+  }
+
+  .back-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .header-actions {
+    gap: 8px;
+  }
+
+  .action-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  .itinerary-hero {
+    padding: 20px 24px;
+  }
+
+  .itinerary-hero h1 {
+    font-size: 24px;
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .stat-value {
+    font-size: 20px;
+  }
+
+  .itinerary-tabs {
+    padding: 6px;
+    gap: 6px;
+  }
+
+  .tab {
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .tab-content {
+    padding: 16px;
+  }
+
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hotels-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hotels-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .booking-links {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .booking-link {
+    flex: 1;
+    text-align: center;
+  }
+
+  .activity-card {
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .activity-time {
+    width: auto;
+  }
+
+  .day-header h2 {
+    font-size: 22px;
+  }
+
+  .meals-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Restaurants Tab */
+.restaurants-header {
+  margin-bottom: 30px;
+}
+
+.restaurants-header h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #a4b9ff;
+  margin: 0 0 8px;
+  text-shadow: none;
+}
+
+.section-subtitle {
+  font-size: 16px;
+  color: #a4b9ff;
+  margin: 0;
+  font-weight: 500;
+  text-shadow: none;
+}
+
+.must-try {
+  margin: 16px 0 28px;
+  padding: 18px 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(77, 166, 255, 0.12),
+    rgba(111, 184, 255, 0.06)
+  );
+  border: 1px solid rgba(111, 184, 255, 0.22);
+  border-radius: 16px;
+  box-shadow: 0 0 24px rgba(77, 166, 255, 0.18);
+}
+
+.must-try h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 12px;
+  text-shadow: 0 0 12px rgba(111, 184, 255, 0.45);
+}
+
+.must-try-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.must-try-pill {
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(10, 16, 26, 0.8);
+  border: 1px solid rgba(77, 166, 255, 0.45);
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 13px;
+  font-weight: 600;
+  text-shadow: 0 0 8px rgba(77, 166, 255, 0.3);
+}
+
+.restaurants-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+}
+
+.restaurant-card {
+  background: linear-gradient(
+    135deg,
+    rgba(77, 166, 255, 0.08),
+    rgba(111, 184, 255, 0.04)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.restaurant-card:hover {
+  transform: translateY(-4px);
+  background: linear-gradient(
+    135deg,
+    rgba(77, 166, 255, 0.12),
+    rgba(111, 184, 255, 0.06)
+  );
+  border-color: rgba(77, 166, 255, 0.4);
+  box-shadow: 0 8px 24px rgba(77, 166, 255, 0.2);
+}
+
+.restaurant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.restaurant-header h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  flex: 1;
+  letter-spacing: 0.3px;
+}
+
+.restaurant-rating {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffc107;
+  white-space: nowrap;
+  background: rgba(255, 193, 7, 0.1);
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+
+.restaurant-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.restaurant-details p {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.restaurant-cuisine {
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-weight: 600 !important;
+}
+
+.restaurant-price {
+  color: #6fb8ff !important;
+  font-weight: 700 !important;
+}
+
+.restaurant-location {
+  color: rgba(77, 166, 255, 0.95) !important;
+}
+
+.restaurant-best {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.restaurant-speciality {
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border-left: 3px solid #ffc107;
+}
+
+.restaurant-speciality strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffc107;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.restaurant-speciality p {
+  margin: 0;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.restaurant-tip {
+  padding: 12px;
+  background: rgba(77, 166, 255, 0.08);
+  border-radius: 8px;
+  border-left: 3px solid #4da6ff;
+}
+
+.restaurant-tip strong {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #4da6ff;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.restaurant-tip p {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+}
+
+.restaurant-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.restaurant-link {
+  flex: 1;
+  text-align: center;
+  background: rgba(77, 166, 255, 0.15);
+  border: 1px solid rgba(77, 166, 255, 0.3);
+  color: #6fb8ff;
+  padding: 10px 16px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.restaurant-link:hover {
+  background: rgba(77, 166, 255, 0.25);
+  border-color: #4da6ff;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.no-restaurants {
+  text-align: center;
+  padding: 60px 20px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.no-restaurants p {
+  margin: 8px 0;
+  font-size: 15px;
+}
+
+.no-restaurants p:first-child {
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 600;
+}
+
+/* Disabled state for buttons */
+.action-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.feedback-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+  padding: 20px;
+}
+
+.feedback-modal {
+  width: min(560px, 100%);
+  background: linear-gradient(
+    160deg,
+    rgba(6, 12, 22, 0.95),
+    rgba(10, 18, 32, 0.88)
+  );
+  border: 1px solid rgba(111, 184, 255, 0.22);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow:
+    0 24px 60px rgba(3, 8, 18, 0.65),
+    0 0 30px rgba(77, 166, 255, 0.14);
+}
+
+.feedback-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.feedback-modal-header h3 {
+  margin: 0;
+  font-size: 22px;
+  color: #fff;
+}
+
+.feedback-close-btn {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feedback-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 600;
+}
+
+.feedback-input {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(8, 16, 30, 0.75);
+  color: #fff;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.feedback-input:focus {
+  outline: none;
+  border-color: rgba(111, 184, 255, 0.7);
+  box-shadow: 0 0 0 2px rgba(77, 166, 255, 0.25);
+}
+
+.feedback-stars {
+  display: flex;
+  gap: 6px;
+}
+
+.feedback-star {
+  border: none;
+  background: transparent;
+  color: rgba(255, 193, 7, 0.35);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+.feedback-star.active {
+  color: #ffc107;
+}
+
+.feedback-star:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.feedback-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.feedback-status {
+  margin: 4px 0 0;
+  font-size: 13px;
+}
+
+.feedback-status-error {
+  color: #ff9c9c;
+}
+
+.feedback-submit {
+  margin-top: 8px;
+  align-self: flex-start;
+  background: linear-gradient(135deg, #4da6ff, #6fb8ff);
+  border: none;
+  border-radius: 12px;
+  color: #000;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.feedback-submit:hover:enabled {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(77, 166, 255, 0.35);
+}
+
+.feedback-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.feedback-toast {
+  margin: 14px 2px 0;
+  font-size: 14px;
+  color: #97f4bf;
+}
+
+/* Galaxy Theme Final Overrides */
+.itinerary-content {
+  backdrop-filter: blur(4px);
+}
+
+.itinerary-hero,
+.itinerary-tabs,
+.tab-content,
+.overview-card,
+.activity-card,
+.meal-card,
+.day-notes,
+.hotel-card,
+.restaurant-card,
+.must-try,
+.map-container,
+.location-item,
+.booking-link,
+.book-btn,
+.restaurant-link,
+.card-modal,
+.feedback-modal {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(164, 185, 255, 0.25) !important;
+  box-shadow: 0 0 25px rgba(164, 185, 255, 0.1) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.itinerary-hero {
+  background: rgba(10, 15, 30, 0.35) !important;
+}
+
+.card-modal-overlay,
+.feedback-modal-overlay {
+  background: rgba(10, 15, 30, 0.35) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.itinerary-hero h1 {
+  color: #c792ff !important;
+  text-shadow: 0 0 20px rgba(199, 146, 255, 0.35) !important;
+}
+
+.stat-label,
+.section-subtitle,
+.hotels-header h2,
+.restaurants-header h2,
+.map-section h2,
+.day-header h2,
+.activities-timeline h3,
+.meals-section h3,
+.must-try h3,
+.map-locations h3,
+.overview-card h3,
+.card-modal-header h2,
+.feedback-modal-header h3 {
+  color: #a4b9ff !important;
+  text-shadow: 0 0 12px rgba(164, 185, 255, 0.45) !important;
+}
+
+.itinerary-content p,
+.itinerary-content li,
+.stat-value,
+.day-notes p,
+.hotel-amenities,
+.restaurant-details p,
+.location-item span:last-child,
+.card-preview {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.itinerary-tabs {
+  border-radius: 12px !important;
+  padding: 6px !important;
+}
+
+.tab {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: #a4b9ff !important;
+  border: 1px solid rgba(164, 185, 255, 0.2) !important;
+  border-radius: 8px !important;
+}
+
+.tab:hover {
+  box-shadow: 0 0 12px rgba(199, 146, 255, 0.65) !important;
+}
+
+.tab.active,
+.day-pill.active {
+  background: linear-gradient(90deg, #a4b9ff, #c792ff) !important;
+  color: #000 !important;
+  border: 1px solid rgba(164, 185, 255, 0.3) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 0 12px rgba(199, 146, 255, 0.65) !important;
+}
+
+.back-btn,
+.action-btn,
+.feedback-submit,
+.day-pill,
+.booking-link,
+.book-btn,
+.restaurant-link,
+.feedback-close-btn,
+.modal-close-btn {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(164, 185, 255, 0.28) !important;
+  color: #a4b9ff !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.back-btn:hover,
+.action-btn:hover,
+.feedback-submit:hover:enabled,
+.booking-link:hover,
+.book-btn:hover,
+.restaurant-link:hover,
+.day-pill:hover,
+.feedback-close-btn:hover,
+.modal-close-btn:hover {
+  background: rgba(199, 146, 255, 0.15) !important;
+  border-color: #c792ff !important;
+  color: #c792ff !important;
+  box-shadow: 0 0 12px rgba(199, 146, 255, 0.65) !important;
+}
+
+.meals-section,
+.card-modal-header,
+.transport-tip,
+.restaurant-speciality,
+.restaurant-tip {
+  border-color: rgba(164, 185, 255, 0.25) !important;
+}
+
+.meal-icon,
+.activity-time,
+.day-badge,
+.restaurant-rating {
+  color: #a4b9ff !important;
+  text-shadow: 0 0 10px rgba(164, 185, 255, 0.5);
+}
+
+.day-badge,
+.hotel-type {
+  background: linear-gradient(90deg, #a4b9ff, #c792ff) !important;
+  color: #000 !important;
+}
+
+/* Modal clarity fix: keep this box clearly visible over the page */
+.card-modal-overlay {
+  background: rgba(10, 15, 30, 0.55) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.card-modal {
+  background: rgba(10, 15, 30, 0.82) !important;
+  border: 1px solid rgba(164, 185, 255, 0.38) !important;
+  box-shadow:
+    0 18px 55px rgba(3, 8, 18, 0.65),
+    0 0 26px rgba(164, 185, 255, 0.18) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.card-modal-header {
+  background: rgba(10, 15, 30, 0.88) !important;
+  border-bottom: 1px solid rgba(164, 185, 255, 0.3) !important;
+}
+
+.card-modal-content {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.highlights-list li,
+.tips-list li,
+.packing-list li {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(164, 185, 255, 0.24) !important;
+  box-shadow: none !important;
+}
