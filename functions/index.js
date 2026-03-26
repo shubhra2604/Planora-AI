@@ -4,41 +4,17 @@ const { onCall, HttpsError } = require("firebase-functions/v2/https");
 const { logger } = require("firebase-functions");
 const { defineSecret } = require("firebase-functions/params");
 const admin = require("firebase-admin");
-const nodemailer = require("nodemailer");
-const crypto = require("crypto");
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const PDFDocument = require("pdfkit");
 
 admin.initializeApp();
 
-const OTP_EXPIRY_MINUTES = 10;
-const MAX_ATTEMPTS = 5;
-const OTP_COLLECTION = "otpCodes";
-
-const SMTP_HOST_SECRET = defineSecret("SMTP_HOST");
-const SMTP_PORT_SECRET = defineSecret("SMTP_PORT");
-const SMTP_SECURE_SECRET = defineSecret("SMTP_SECURE");
-const SMTP_USER_SECRET = defineSecret("SMTP_USER");
-const SMTP_PASS_SECRET = defineSecret("SMTP_PASS");
-const SMTP_FROM_SECRET = defineSecret("SMTP_FROM");
 const GEMINI_API_KEY_SECRET = defineSecret("GEMINI_API_KEY");
 
 function normalizeEmail(email) {
   return String(email || "")
     .trim()
     .toLowerCase();
-}
-
-function generateOtp() {
-  return String(Math.floor(100000 + Math.random() * 900000));
-}
-
-function hashOtp(otp) {
-  return crypto.createHash("sha256").update(otp).digest("hex");
-}
-
-function otpDocRef(email) {
-  return admin.firestore().collection(OTP_COLLECTION).doc(email);
 }
 
 function getSecretValue(secret, fallbackKey) {
@@ -73,101 +49,6 @@ function getMailer() {
     auth: { user, pass },
   });
 }
-
-exports.requestOtp = onCall(
-  {
-    cors: true,
-    secrets: [
-      SMTP_HOST_SECRET,
-      SMTP_PORT_SECRET,
-      SMTP_SECURE_SECRET,
-      SMTP_USER_SECRET,
-      SMTP_PASS_SECRET,
-      SMTP_FROM_SECRET,
-    ],
-  },
-  async (request) => {
-    const email = normalizeEmail(request.data?.email);
-    if (!email || !email.includes("@")) {
-      throw new HttpsError("invalid-argument", "Valid email is required.");
-    }
-
-    const otp = generateOtp();
-    const otpHash = hashOtp(otp);
-    const expiresAt = Date.now() + OTP_EXPIRY_MINUTES * 60 * 1000;
-
-    await otpDocRef(email).set({
-      email,
-      otpHash,
-      attempts: 0,
-      expiresAt,
-      updatedAt: Date.now(),
-    });
-
-    const transporter = getMailer();
-    const rawFrom =
-      getSecretValue(SMTP_FROM_SECRET, "LOCAL_SMTP_FROM") ||
-      "no-reply@planora.ai";
-    // Extract just the email address so we can force the display name to Planora AI
-    const fromEmail = rawFrom.includes("<")
-      ? rawFrom.match(/<([^>]+)>/)?.[1] || rawFrom
-      : rawFrom;
-    const from = `Planora AI <${fromEmail}>`;
-
-    try {
-      await transporter.sendMail({
-        from,
-        to: email,
-        subject: "Your Planora AI OTP Code",
-        text: `Your OTP is ${otp}. It expires in ${OTP_EXPIRY_MINUTES} minutes.\n\n— Planora AI`,
-      });
-    } catch (err) {
-      logger.error("OTP email send failed", err);
-      throw new HttpsError("internal", "Failed to send OTP email.");
-    }
-
-    return { ok: true };
-  },
-);
-
-exports.verifyOtp = onCall({ cors: true }, async (request) => {
-  const email = normalizeEmail(request.data?.email);
-  const otp = String(request.data?.otp || "").trim();
-
-  if (!email || !email.includes("@") || !otp) {
-    throw new HttpsError("invalid-argument", "Email and OTP are required.");
-  }
-
-  const ref = otpDocRef(email);
-  const snapshot = await ref.get();
-  const data = snapshot.exists ? snapshot.data() : null;
-
-  if (!data) {
-    throw new HttpsError("not-found", "OTP not found.");
-  }
-
-  if (data.expiresAt < Date.now()) {
-    await ref.delete();
-    throw new HttpsError("failed-precondition", "OTP expired.");
-  }
-
-  if (data.attempts >= MAX_ATTEMPTS) {
-    await ref.delete();
-    throw new HttpsError("resource-exhausted", "Too many attempts.");
-  }
-
-  const incomingHash = hashOtp(otp);
-  if (incomingHash !== data.otpHash) {
-    await ref.update({
-      attempts: (data.attempts || 0) + 1,
-      updatedAt: Date.now(),
-    });
-    throw new HttpsError("invalid-argument", "Invalid OTP.");
-  }
-
-  await ref.delete();
-  return { verified: true };
-});
 
 async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));

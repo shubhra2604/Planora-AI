@@ -6,8 +6,6 @@ import {
   signOut,
   signInWithEmail,
   createUserWithEmail,
-  sendOtpEmail,
-  verifyOtpCode,
   auth,
 } from "../firebase";
 import { db } from "../firebase";
@@ -43,9 +41,6 @@ export default function Navbar({
   const [authName, setAuthName] = useState("");
   const [loginError, setLoginError] = useState("");
   const [signupError, setSignupError] = useState("");
-  const [signupStep, setSignupStep] = useState(1);
-  const [otp, setOtp] = useState("");
-  const [otpHint, setOtpHint] = useState("");
   const dropdownRef = useRef(null);
   const emailInputRef = useRef(null);
   const navigate = useNavigate();
@@ -56,8 +51,6 @@ export default function Navbar({
     setShowSignup(false);
     setLoginError("");
     setSignupError("");
-    setSignupStep(1);
-    setOtpHint("");
   }, [user]);
 
   useEffect(() => {
@@ -140,34 +133,6 @@ export default function Navbar({
     }
   };
 
-  const handleSignupEmail = async (event) => {
-    event.preventDefault();
-    setSignupError("");
-    try {
-      await sendOtpEmail(authEmail);
-      setSignupStep(2);
-      setOtpHint("OTP sent to your email. Enter the 6-digit code.");
-    } catch {
-      setSignupError(
-        "Couldn't send the OTP. Check your email address and try again.",
-      );
-    }
-  };
-
-  const handleSignupOtp = async (event) => {
-    event.preventDefault();
-    setSignupError("");
-    try {
-      await verifyOtpCode(authEmail, otp);
-      setSignupStep(3);
-      setOtpHint("OTP verified. Now set your name and password.");
-    } catch {
-      setSignupError(
-        "That code doesn’t match. Double-check the email and try again.",
-      );
-    }
-  };
-
   const handleSignupFinal = async (event) => {
     event.preventDefault();
     setSignupError("");
@@ -190,8 +155,6 @@ export default function Navbar({
       setAuthEmail("");
       setAuthPassword("");
       setAuthName("");
-      setSignupStep(1);
-      setOtpHint("");
     } catch (err) {
       const message = (err?.message || "").toLowerCase();
       if (message.includes("email") && message.includes("use")) {
@@ -399,101 +362,48 @@ export default function Navbar({
 
       {showSignup && (
         <div className="auth-modal-overlay">
-          {signupStep === 1 && (
-            <form className="auth-form" onSubmit={handleSignupEmail}>
-              <h3>Sign Up - Step 1</h3>
-              <input
-                className={signupError ? "auth-input-error" : ""}
-                type="email"
-                placeholder="Email"
-                value={authEmail}
-                onChange={(event) => setAuthEmail(event.target.value)}
-                required
-              />
-              {signupError && <div className="auth-error">{signupError}</div>}
-              <button className="nav-button" type="submit">
-                Send OTP
-              </button>
-              <button
-                className="nav-button"
-                type="button"
-                onClick={() => {
-                  setShowSignup(false);
-                  setSignupError("");
-                }}
-              >
-                Cancel
-              </button>
-            </form>
-          )}
-
-          {signupStep === 2 && (
-            <form className="auth-form" onSubmit={handleSignupOtp}>
-              <h3>Sign Up - Step 2</h3>
-              <input
-                className={signupError ? "auth-input-error" : ""}
-                type="text"
-                placeholder="Enter OTP"
-                value={otp}
-                onChange={(event) => setOtp(event.target.value)}
-                required
-              />
-              {otpHint && <div className="auth-hint">{otpHint}</div>}
-              {signupError && <div className="auth-error">{signupError}</div>}
-              <button className="nav-button" type="submit">
-                Verify OTP
-              </button>
-              <button
-                className="nav-button"
-                type="button"
-                onClick={() => {
-                  setShowSignup(false);
-                  setSignupError("");
-                  onSignupChange?.(false);
-                }}
-              >
-                Cancel
-              </button>
-            </form>
-          )}
-
-          {signupStep === 3 && (
-            <form className="auth-form" onSubmit={handleSignupFinal}>
-              <h3>Sign Up - Step 3</h3>
-              <input
-                className={signupError ? "auth-input-error" : ""}
-                type="text"
-                placeholder="Name"
-                value={authName}
-                onChange={(event) => setAuthName(event.target.value)}
-                required
-              />
-              <input
-                className={signupError ? "auth-input-error" : ""}
-                type="password"
-                placeholder="Password"
-                value={authPassword}
-                onChange={(event) => setAuthPassword(event.target.value)}
-                required
-              />
-              {otpHint && <div className="auth-hint">{otpHint}</div>}
-              {signupError && <div className="auth-error">{signupError}</div>}
-              <button className="nav-button" type="submit">
-                Create Account
-              </button>
-              <button
-                className="nav-button"
-                type="button"
-                onClick={() => {
-                  setShowSignup(false);
-                  setSignupError("");
-                  onSignupChange?.(false);
-                }}
-              >
-                Cancel
-              </button>
-            </form>
-          )}
+          <form className="auth-form" onSubmit={handleSignupFinal}>
+            <h3>Sign Up</h3>
+            <input
+              className={signupError ? "auth-input-error" : ""}
+              type="email"
+              placeholder="Email"
+              value={authEmail}
+              onChange={(event) => setAuthEmail(event.target.value)}
+              required
+            />
+            <input
+              className={signupError ? "auth-input-error" : ""}
+              type="text"
+              placeholder="Name"
+              value={authName}
+              onChange={(event) => setAuthName(event.target.value)}
+              required
+            />
+            <input
+              className={signupError ? "auth-input-error" : ""}
+              type="password"
+              placeholder="Password"
+              value={authPassword}
+              onChange={(event) => setAuthPassword(event.target.value)}
+              required
+            />
+            {signupError && <div className="auth-error">{signupError}</div>}
+            <button className="nav-button" type="submit">
+              Create Account
+            </button>
+            <button
+              className="nav-button"
+              type="button"
+              onClick={() => {
+                setShowSignup(false);
+                setSignupError("");
+                onSignupChange?.(false);
+              }}
+            >
+              Cancel
+            </button>
+          </form>
         </div>
       )}
     </>

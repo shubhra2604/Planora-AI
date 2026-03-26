@@ -108,16 +108,6 @@ async function createUserWithEmail(email, password, firstName) {
   return userCredential;
 }
 
-function sendOtpEmail(email) {
-  const requestOtp = httpsCallable(functions, "requestOtp");
-  return requestOtp({ email });
-}
-
-function verifyOtpCode(email, otp) {
-  const verifyOtp = httpsCallable(functions, "verifyOtp");
-  return verifyOtp({ email, otp });
-}
-
 function generateItinerary(tripData) {
   const generateItinerary = httpsCallable(functions, "generateItinerary");
   return generateItinerary(tripData);
@@ -138,8 +128,6 @@ export {
   signOut,
   signInWithEmail,
   createUserWithEmail,
-  sendOtpEmail,
-  verifyOtpCode,
   generateItinerary,
   generatePDF,
 };
