@@ -1,73 +1,87 @@
-# React + Vite
+🚀 Planora AI – Smart Travel Planner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Planora AI is a full-stack AI-powered travel planning web application that helps users generate personalized itineraries, manage trips, and store travel data securely.
 
-Currently, two official plugins are available:
+🔗 Live Demo: https://planora-ai-three.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+📦 GitHub Repo: https://github.com/shubhra2604/Planora-AI
 
-## React Compiler
+✨ Features
+🔐 Authentication
+Email/Password login using Firebase Auth
+🤖 AI Travel Planning
+Generate personalized itineraries based on user inputs
+🗂️ Trip Management
+Save, view, and manage trips
+☁️ Cloud Storage
+Firestore database for persistent storage
+⚡ Fast UI
+Built with React + Vite for optimized performance
+🌐 Deployment Ready
+Hosted on Vercel
+🛠️ Tech Stack
+Frontend
+React (Vite)
+React Router
+CSS
+Backend / Services
+Firebase Authentication
+Firebase Firestore
+Firebase Functions (optional)
+Deployment
+Vercel
+🧠 System Architecture
+Frontend interacts with Firebase Authentication for login/signup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+User-specific data stored in Firestore:
 
-## Expanding the ESLint configuration
+users/{uid}/trips/{tripId}
+AI itinerary generation handled via API / logic layer
+📸 Screenshots
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+(Add screenshots here later for stronger impact)
 
-## Google Sign-In (Firebase)
+⚙️ Setup Instructions
+1. Clone the repo
+git clone https://github.com/shubhra2604/Planora-AI.git
+cd Planora-AI
+2. Install dependencies
+npm install
+3. Setup environment variables
 
-Currently, the app uses email/password authentication via Firebase, which works reliably on any hosting platform (Vercel, Firebase Hosting, etc.).
+Create a .env file:
 
-To add Google OAuth using the redirect flow, you would need to deploy to Firebase Hosting (which serves the redirect handler automatically). Since you're planning to deploy to Vercel, you can:
+VITE_FIREBASE_API_KEY=your_key
+VITE_FIREBASE_AUTH_DOMAIN=your_domain
+VITE_FIREBASE_PROJECT_ID=your_project
+VITE_FIREBASE_STORAGE_BUCKET=your_bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_id
+VITE_FIREBASE_APP_ID=your_app_id
 
-1. **For now** — use email/password sign-up (already implemented).
-2. **Later (production)** — add server-side Google OAuth on Vercel using a serverless function that handles the OAuth flow and mints Firebase custom tokens. This avoids the popup/redirect handler complexity.
+VITE_USE_FIREBASE_EMULATORS=false
+4. Run locally
+npm run dev
+🚀 Deployment
 
-If you want to implement server-side OAuth, reach out and I can scaffold it.
+Deployed using Vercel
 
-## Popup issues and Cross-Origin-Opener-Policy (COOP)
+Make sure:
 
-If you see errors like:
-
-```
-Cross-Origin-Opener-Policy policy would block the window.close call
-```
-
-This means the browser blocked the auth popup from calling `window.close()` because the page is COOP-isolated. What I added to this repo:
-
-- `vite.config.js` — sets `Cross-Origin-Opener-Policy: same-origin-allow-popups` for the Vite dev server.
-- `vercel.json` — instructs Vercel to set the same header when deployed.
-
-These headers allow popups to function, but Firebase's auth popup flow also requires the redirect handler files (served by Firebase Hosting). For Vercel, email/password or server-side OAuth is the recommended approach.
-
-## Firebase setup (dev vs production)
-
-Use `.env.example` as reference and create your own `.env`.
-
-- `VITE_USE_FIREBASE_EMULATORS=true` for local emulator development
-- `VITE_USE_FIREBASE_EMULATORS=false` for hosted production
-
-The app stores trips in Firestore under `users/{uid}/trips/{tripId}`.
-
-## Production checklist
-
-1. Create Cloud Firestore in Firebase Console (if not already created).
-2. Set Vercel/Firebase Hosting env vars from `.env.example`.
-3. Set `VITE_USE_FIREBASE_EMULATORS=false` in production env.
-4. Deploy Firestore security rules and indexes:
-
-```bash
+Environment variables are configured in Vercel
+Firebase rules are deployed:
 firebase deploy --only firestore:rules,firestore:indexes
-```
+🔐 Firebase Notes
+Authentication: Email/Password enabled
+Firestore used for storing trips
+Emulator support available for local development
+📌 Future Improvements
+Google OAuth (server-side)
+AI recommendations enhancement
+Trip sharing feature
+Mobile responsiveness improvements
+👤 Author
 
-5. Deploy functions (if updated):
+Shubhra Kiran Bid
 
-```bash
-firebase deploy --only functions
-```
-
-6. Deploy frontend and verify:
-	- Login works
-	- Generate itinerary works
-	- `My Trips` persists across logout/login and devices
+LinkedIn: https://www.linkedin.com/in/shubhra-kiran-bid/
+GitHub: https://github.com/shubhra2604
