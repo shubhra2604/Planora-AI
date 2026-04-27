@@ -1,87 +1,149 @@
-🚀 Planora AI – Smart Travel Planner
+# 🌍 Planora AI – Smart Travel Planner
 
-Planora AI is a full-stack AI-powered travel planning web application that helps users generate personalized itineraries, manage trips, and store travel data securely.
+> An AI-powered full-stack travel planner that generates personalized day-by-day itineraries using Google Gemini API, with secure user authentication and cloud-based trip storage.
 
-🔗 Live Demo: https://planora-ai-three.vercel.app
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20Site-blue?style=for-the-badge&logo=vercel)](https://planora-ai-three.vercel.app)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Repo-black?style=for-the-badge&logo=github)](https://github.com/shubhra2604/Planora-AI)
+[![React](https://img.shields.io/badge/React-Vite-61DAFB?style=for-the-badge&logo=react)](https://vitejs.dev/)
+[![ReactBits](https://img.shields.io/badge/React%20Bits-UI%20Components-FF6B6B?style=for-the-badge&logo=react)](https://reactbits.dev/)
+[![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)](https://firebase.google.com/)
+[![Gemini](https://img.shields.io/badge/Gemini%20API-Google%20AI-4285F4?style=for-the-badge&logo=google)](https://ai.google.dev/)
 
-📦 GitHub Repo: https://github.com/shubhra2604/Planora-AI
+---
 
-✨ Features
-🔐 Authentication
-Email/Password login using Firebase Auth
-🤖 AI Travel Planning
-Generate personalized itineraries based on user inputs
-🗂️ Trip Management
-Save, view, and manage trips
-☁️ Cloud Storage
-Firestore database for persistent storage
-⚡ Fast UI
-Built with React + Vite for optimized performance
-🌐 Deployment Ready
-Hosted on Vercel
-🛠️ Tech Stack
-Frontend
-React (Vite)
-React Router
-CSS
-Backend / Services
-Firebase Authentication
-Firebase Firestore
-Firebase Functions (optional)
-Deployment
-Vercel
-🧠 System Architecture
-Frontend interacts with Firebase Authentication for login/signup
+## ✨ Features
 
-User-specific data stored in Firestore:
+### 🔐 Authentication
+- Secure login/signup using **Firebase Authentication**
 
+### 🤖 AI Itinerary Generation (Gemini API)
+- Generates detailed **day-by-day travel plans** including:
+  - 📍 Must-visit places
+  - 🏨 Hotels & restaurants
+  - 💡 Travel tips
+  - 💰 Budget estimation
+
+### 🧾 Trip Management
+- Save and retrieve itineraries per user
+- Persistent storage using **Firestore**
+
+### 📄 Export & Feedback
+- Download itinerary as **PDF**
+- Built-in **feedback system**
+
+### 🎯 Smart Inputs
+- Source, destination, budget, travel style
+- Custom instructions (e.g., hidden gems, veg food, etc.)
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Frontend | React (Vite), React Router, CSS (Glassmorphism UI) |
+| UI Components | [React Bits](https://reactbits.dev/) (Animated UI Components) |
+| Authentication | Firebase Authentication |
+| Database | Firebase Firestore |
+| AI | Gemini API (Google AI) |
+| Deployment | Vercel |
+
+---
+
+## 🧠 How It Works
+
+```
+User Input → Gemini API → Structured Itinerary → UI Display → Firestore Storage
+```
+
+1. **User enters trip details** — destination, dates, budget, preferences
+2. **Data is sent to Gemini API**
+3. **Gemini generates a structured itinerary:**
+   - Day-by-day plan
+   - Hotels & food suggestions
+   - Travel tips & logistics
+4. **Response is parsed and displayed** in the UI
+5. **Trip is stored in Firestore** under:
+
+```
 users/{uid}/trips/{tripId}
-AI itinerary generation handled via API / logic layer
-📸 Screenshots
+```
 
-(Add screenshots here later for stronger impact)
+---
 
-⚙️ Setup Instructions
-1. Clone the repo
+## ⚙️ Setup Instructions
+
+### Prerequisites
+- Node.js ≥ 18
+- A Firebase project
+- A Google Gemini API key
+
+### Installation
+
+```bash
 git clone https://github.com/shubhra2604/Planora-AI.git
 cd Planora-AI
-2. Install dependencies
 npm install
-3. Setup environment variables
+npm run dev
+```
 
-Create a .env file:
+---
 
-VITE_FIREBASE_API_KEY=your_key
-VITE_FIREBASE_AUTH_DOMAIN=your_domain
-VITE_FIREBASE_PROJECT_ID=your_project
-VITE_FIREBASE_STORAGE_BUCKET=your_bucket
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_id
+## 🔐 Environment Variables
+
+Create a `.env` file in the root directory:
+
+```env
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
 VITE_FIREBASE_APP_ID=your_app_id
 
-VITE_USE_FIREBASE_EMULATORS=false
-4. Run locally
-npm run dev
-🚀 Deployment
+VITE_GEMINI_API_KEY=your_gemini_api_key
+```
 
-Deployed using Vercel
+> ⚠️ Never commit your `.env` file. Make sure it's listed in `.gitignore`.
 
-Make sure:
+---
 
-Environment variables are configured in Vercel
-Firebase rules are deployed:
-firebase deploy --only firestore:rules,firestore:indexes
-🔐 Firebase Notes
-Authentication: Email/Password enabled
-Firestore used for storing trips
-Emulator support available for local development
-📌 Future Improvements
-Google OAuth (server-side)
-AI recommendations enhancement
-Trip sharing feature
-Mobile responsiveness improvements
-👤 Author
+## 🚀 Deployment
 
-Shubhra Kiran Bid
+The application is deployed on **Vercel**.
 
-LinkedIn: https://www.linkedin.com/in/shubhra-kiran-bid/
-GitHub: https://github.com/shubhra2604
+1. Push code to GitHub
+2. Import project in [Vercel](https://vercel.com/)
+3. Add environment variables in the Vercel dashboard
+4. Deploy 🎉
+
+---
+
+## 🔮 Future Improvements
+
+- [ ] Google OAuth login
+- [ ] Real-time pricing APIs (flights/hotels)
+- [ ] Collaborative trip planning
+- [ ] Mobile app version
+
+---
+
+## 👤 Author
+
+**Shubhra Kiran Bid**
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat&logo=linkedin)](https://www.linkedin.com/in/shubhra-kiran-bid/)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=flat&logo=github)](https://github.com/shubhra2604)
+
+---
+
+## ⭐ Acknowledgements
+
+- [Google Gemini API](https://ai.google.dev/)
+- [Firebase](https://firebase.google.com/)
+- [React Bits](https://reactbits.dev/) — Animated UI components for React
+- [Vercel](https://vercel.com/)
+
+---
+
+> If you found this project helpful, consider giving it a ⭐ on [GitHub](https://github.com/shubhra2604/Planora-AI)!
